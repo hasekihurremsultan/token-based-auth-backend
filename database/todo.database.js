@@ -40,4 +40,6 @@ const deleteTodoById = async todoId => {
     }
 }
 
-module.exports = { createTodo, getTodoById, deleteTodoById }
+const getAll = userId => cursor.find({ userId: new ObjectId(userId) }).toArray()
+
+module.exports = { createTodo, getTodoById, deleteTodoById, getAll }
