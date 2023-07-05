@@ -5,7 +5,13 @@ const getAllTodos = async (req, res) => {
 
     try {
 
-        return res.status(200).json(await getAll(_id));
+        const todos = await getAll(_id);
+        todos.map(todo => {
+            delete todo.userId;
+            return todo;
+        });
+
+        return res.status(200).json(todos);
 
     } catch (error) {
 

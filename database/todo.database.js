@@ -42,4 +42,28 @@ const deleteTodoById = async todoId => {
 
 const getAll = userId => cursor.find({ userId: new ObjectId(userId) }).toArray()
 
-module.exports = { createTodo, getTodoById, deleteTodoById, getAll }
+const updateTodoById = async payload => {
+    try {
+        const {modifiedCount} = await cursor.updateOne({ _id: new ObjectId(payload.todoId) }, {
+            $set: {
+                title: payload.title,
+                description: payload.description,
+                done: payload.done,
+                updated_at: Date.now()
+            }
+        });
+
+        return modifiedCount > 0;
+    } catch (err) {
+        console.error("Failed to update todo: ", err);
+        return false;
+    }
+}
+
+module.exports = {
+    createTodo,
+    getTodoById,
+    deleteTodoById,
+    getAll,
+    updateTodoById
+}
